@@ -23,3 +23,7 @@ International Meteor Organization calendars: https://www.imo.net/resources/calen
 
 ## Hardware profiles
 ZWO Seestar product specifications: https://www.seestar.com/ ; DWARFLAB: https://www.dwarflab.com/ ; Vaonis: https://vaonis.com/ . Sensor size is represented through pixel pitch and active image dimensions; native field orientation may differ from the landscape comparison. Profile values can be replaced with an individual custom setup.
+
+### Celestron Origin Mark II (ergänzt 25.09.2026)
+Hersteller: https://www.celestron.com/products/celestron-origin-intelligent-home-observatory
+RASA 152 mm Öffnung, 335 mm Brennweite; Origin 678C / Sony IMX678-AAQR1, 2,0 µm Pixel, 3856 × 2180 effektive Pixel. Hersteller-Bildfeld 1,32° × 0,75°. Mark II verwendet die neue Kamera, nicht die IMX178 des ursprünglichen Origin.

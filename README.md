@@ -68,3 +68,11 @@ Die Tests benötigen nur Node.js, keine npm-Installation. Sie prüfen Zeitzonen,
 ## Lizenzen
 
 Eigener Anwendungscode: MIT, siehe LICENSE. Astronomiebibliothek und Leaflet: mitgelieferte Lizenzen in `vendor/`. Der bearbeitete OpenNGC-Katalog bleibt CC BY-SA 4.0. Sterne und Konstellationslinien stammen aus D3-Celestial (Olaf Frohn); dessen Quellen nennen XHIP (Anderson & Francis 2012) und IAU-Konstellationen. Attributionen und Datenquellen: [data/SOURCES.md](data/SOURCES.md).
+
+## Sichere Updates (1.1)
+
+Der persistente Hinweis erkennt neu installierte und bereits wartende Service Worker. „Später“ verkleinert ihn; bei erneuter Sichtbarkeit wird er wieder aufgeklappt. Prüfung beim Start, bei Rückkehr in die App, nach Wiederherstellung der Verbindung und stündlich im Vordergrund. „Jetzt aktualisieren“ prüft den aktuellen gespeicherten Stand, schreibt eine separate lokale Sicherung und aktiviert erst danach die neue Version. Andere offene Fenster werden nicht ungefragt neu geladen. Offene Formulare vor dem Update abschließen.
+
+Der Nutzerdatenschlüssel `sternklar-v1` bleibt unabhängig von der App-Version stabil. Datenformat 1 bleibt unverändert; spätere Formate benötigen explizite Migrationen in `migrate()` mit Regressionstests. Nicht lesbare oder unbekannte Formate blockieren Schreibzugriffe, statt Originaldaten zu ersetzen. Unter Einstellungen können Originaldaten exportiert und die letzte Update-Sicherung wiederhergestellt werden; auch vor einer Wiederherstellung wird der vorhandene Rohstand separat erhalten. Lokale Sicherungen ersetzen keine exportierte Datei und schützen nicht vor gelöschten Browserdaten.
+
+Bei jedem Release muss die Shell-Version in `sw.js` erhöht werden. Beim erstmaligen Wechsel von 1.0 auf 1.1 gilt noch der alte Hinweis: alle Sternklar-Fenster schließen und neu öffnen, damit der neue Update-Dialog geladen wird.
