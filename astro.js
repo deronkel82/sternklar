@@ -31,6 +31,9 @@ export function nightContext(date,loc){
  return {date,loc,obs,start,end,step,samples,dark,threshold,mid,phase,illum,rotation,sunTimes,moonRise:rise,moonSet:set,darkHours:dark.length*step/36e5,moonFree:dark.filter(s=>s.moon.altitude<=0).length*step/36e5};
 }
 export function fov(scope){return {w:2*Math.atan(scope.px*scope.pixel/1000/(2*scope.focal))/rad*60,h:2*Math.atan(scope.py*scope.pixel/1000/(2*scope.focal))/rad*60};}
+// Allow 20% framing reserve around the catalogued extent. Unknown sizes
+// cannot establish that a mosaic is useful; this is geometry, not device control.
+export function mosaicUseful(t,scope){const fit=fitTarget(t,scope);return Number.isFinite(fit.ratio)&&fit.ratio<1.25;}
 export function fitTarget(t,scope){const f=fov(scope);if(!t.major)return {ratio:null,label:'Größe unbekannt',f};const a=t.major,b=t.minor||a;const ratio=Math.max(Math.min(f.w/a,f.h/b),Math.min(f.w/b,f.h/a));return {ratio,label:ratio<1?'Mosaik nötig':ratio<1.25?'Knapp im Bild':ratio>12?'Sehr kleines Motiv':'Passt ins Bild',f};}
 export function analyze(t,ctx,scope,settings={}){
  const eq=starEq(t.ra,t.dec,ctx.mid,ctx.rotation),min=settings.minAltitude??20,fit=fitTarget(t,scope),points=[],windows=[];let open=null,minMoon=180;
