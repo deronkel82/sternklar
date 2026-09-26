@@ -1,4 +1,4 @@
-const SHELL='sternklar-shell-v1.2.0';
+const SHELL='sternklar-shell-v1.2.1';
 const ASSETS=['./','./index.html','./style.css','./app.js','./updates.js','./astro.js','./store.js','./charts.js','./weather.js','./manifest.webmanifest','./data/catalog.json','./data/stars.json','./data/constellations.json','./vendor/astronomy.js','./vendor/leaflet.js','./vendor/leaflet.css','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png','./icons/icon.svg'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(SHELL).then(cache=>cache.addAll(ASSETS.map(path=>new Request(new URL(path,self.location.href),{cache:"reload"}))))));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith('sternklar-shell-')&&key!==SHELL)await caches.delete(key);await self.clients.claim();})()));
