@@ -28,7 +28,7 @@ jobs:
       - name: Stage static app
         run: |
           mkdir _site
-          cp index.html update.html style.css app.js updates.js astro.js store.js charts.js weather.js sw.js manifest.webmanifest _site/
+          cp index.html update.html style.css app.js updates.js changelog.js astro.js store.js charts.js weather.js sw.js manifest.webmanifest _site/
           cp -r data vendor icons _site/
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
