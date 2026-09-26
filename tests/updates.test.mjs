@@ -18,17 +18,17 @@ test('Quota failure leaves source intact and refuses an update checkpoint',()=>{
 test('Future-format writes from another tab are protected',()=>{const map=storage();const raw=JSON.stringify({...defaults(),version:2});map.set(DATA_KEY,raw);assert.throws(()=>save(defaults()));assert.equal(map.get(DATA_KEY),raw);assert.throws(()=>migrate({version:2}));});
 test('Service worker waits for consent and removes only outdated Sternklar shell caches',async()=>{
  const handlers={},deleted=[];let skips=0;const self={addEventListener:(name,fn)=>handlers[name]=fn,skipWaiting:async()=>skips++,clients:{claim:async()=>{}}};
- vm.runInNewContext(fs.readFileSync(new URL('../sw.js',import.meta.url),'utf8'),{self,caches:{keys:async()=>['sternklar-shell-v1.0.0','sternklar-shell-v1.2.2','sternklar-images-v1','other-app'],delete:async k=>deleted.push(k)}});
+ vm.runInNewContext(fs.readFileSync(new URL('../sw.js',import.meta.url),'utf8'),{self,caches:{keys:async()=>['sternklar-shell-v1.0.0','sternklar-shell-v1.2.3','sternklar-images-v1','other-app'],delete:async k=>deleted.push(k)}});
  assert.equal(skips,0);let pending;handlers.message({data:{type:'OTHER'},waitUntil:p=>pending=p});assert.equal(skips,0);handlers.message({data:{type:'SKIP_WAITING'},waitUntil:p=>pending=p});await pending;assert.equal(skips,1);handlers.activate({waitUntil:p=>pending=p});await pending;assert.deepEqual(deleted,['sternklar-shell-v1.0.0']);
 });
 test('Every shell asset exists and new updater is deployed',()=>{const source=fs.readFileSync(new URL('../sw.js',import.meta.url),'utf8');const assets=source.match(/const ASSETS=(\[[^;]+\])/)[1];for(const asset of JSON.parse(assets.replaceAll("'",'"')))assert.ok(fs.existsSync(new URL('../'+asset,import.meta.url)),asset);assert.match(fs.readFileSync(new URL('../.github/workflows/pages.yml',import.meta.url),'utf8'),/cp .*updates.js/);});
 function updateHarness({waiting=true,fail=false}={}){
- const events={},documentEvents={},classes=new Set(),now={},later={},status={};let checkpoints=0,reloads=0,activations=0;
+ const events={},documentEvents={},windowEvents={},classes=new Set(),now={},later={},status={};let checkpoints=0,reloads=0,activations=0;
  const box={hidden:true,classList:{add:x=>classes.add(x),remove:x=>classes.delete(x)},setAttribute(){},querySelector:s=>s==='[data-update-now]'?now:s==='[data-update-later]'?later:status,remove(){}};
  const worker={postMessage:()=>activations++};const reg={waiting:waiting?worker:null,installing:null,addEventListener(){},update:async()=>{}};
- const context={navigator:{onLine:true,serviceWorker:{controller:{},register:async()=>reg,addEventListener:(n,f)=>events[n]=f}},document:{visibilityState:'visible',createElement:()=>box,querySelector:()=>({after(){}}),addEventListener:(n,f)=>documentEvents[n]=f},window:{addEventListener(){}},location:{reload:()=>reloads++},setInterval(){},setTimeout(){},clearTimeout(){},checkpoint:()=>{checkpoints++;if(fail)throw new Error('quota');}};
+ const context={navigator:{onLine:true,serviceWorker:{controller:{},register:async()=>reg,addEventListener:(n,f)=>events[n]=f}},document:{visibilityState:'visible',createElement:()=>box,querySelector:()=>({after(){}}),addEventListener:(n,f)=>documentEvents[n]=f},window:{addEventListener:(n,f)=>windowEvents[n]=f},location:{reload:()=>reloads++},setInterval(){},setTimeout(){},clearTimeout(){},checkpoint:()=>{checkpoints++;if(fail)throw new Error('quota');}};
  vm.createContext(context);vm.runInContext(fs.readFileSync(new URL('../updates.js',import.meta.url),'utf8').replace(/^import .*\n/,'').replaceAll('export async function','async function'),context);
- return{context,reg,box,now,later,status,classes,events,documentEvents,stats:()=>({checkpoints,reloads,activations})};
+ return{context,reg,box,now,later,status,classes,events,documentEvents,windowEvents,stats:()=>({checkpoints,reloads,activations})};
 }
 test('Already waiting update persists, Later minimizes, returning offers again, consent checkpoints before activation',async()=>{const h=updateHarness();await h.context.setupUpdates();assert.equal(h.box.hidden,false);h.later.onclick();assert.ok(h.classes.has('compact'));h.documentEvents.visibilitychange();assert.ok(!h.classes.has('compact'));assert.equal(h.stats().activations,0);h.now.onclick();assert.deepEqual(h.stats(),{checkpoints:1,reloads:0,activations:1});h.events.controllerchange();assert.equal(h.stats().reloads,1);});
 test('Failed checkpoint blocks activation and other tabs never reload without consent',async()=>{const h=updateHarness({fail:true});await h.context.setupUpdates();h.now.onclick();assert.equal(h.stats().activations,0);assert.match(h.status.textContent,/nicht gespeichert/);h.events.controllerchange();assert.equal(h.stats().reloads,0);});
@@ -44,4 +44,16 @@ test('Manual update check reports current, offline and network errors without re
 test('Manual update check offers waiting release and still requires install consent',async()=>{
  const h=updateHarness();await h.context.setupUpdates();await h.context.checkForUpdates();assert.equal(h.now.hidden,false);assert.match(h.status.textContent,/neue Version/);assert.equal(h.stats().activations,0);
  h.now.onclick();h.events.controllerchange();assert.deepEqual(h.stats(),{checkpoints:1,reloads:1,activations:1});
+});
+
+test('No-update and error messages close completely and disappear on navigation',async()=>{
+ const h=updateHarness({waiting:false});await h.context.setupUpdates();await h.context.checkForUpdates();
+ assert.equal(h.later.textContent,'Schließen');h.later.onclick();assert.equal(h.box.hidden,true);
+ await h.context.checkForUpdates();assert.equal(h.box.hidden,false);h.windowEvents.hashchange();assert.equal(h.box.hidden,true);
+ h.context.navigator.onLine=false;await h.context.checkForUpdates();h.windowEvents.hashchange();assert.equal(h.box.hidden,true);
+});
+test('Navigation during checking does not resurrect a status message, but a real update remains accessible',async()=>{
+ const h=updateHarness({waiting:false});await h.context.setupUpdates();let finish;h.reg.update=()=>new Promise(r=>finish=r);
+ const pending=h.context.checkForUpdates();h.windowEvents.hashchange();finish();await pending;assert.equal(h.box.hidden,true);
+ h.reg.update=async()=>{};h.reg.waiting={postMessage(){}};await h.context.checkForUpdates();h.windowEvents.hashchange();assert.equal(h.box.hidden,false);assert.equal(h.later.textContent,'Später');assert.equal(h.now.hidden,false);
 });

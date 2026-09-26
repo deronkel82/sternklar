@@ -14,9 +14,10 @@ export async function setupUpdates(){
  document.querySelector('.topbar').after(box);
  const now=box.querySelector('[data-update-now]'),later=box.querySelector('[data-update-later]'),status=box.querySelector('[role="status"]');
  const hadController=!!navigator.serviceWorker.controller;
- let registration,reloading=false,requested=false,changed=false,timeout;
- const offer=()=>{if(registration?.waiting||changed){now.hidden=false;status.textContent='Eine neue Version ist bereit. Deine gespeicherten Daten bleiben erhalten.';box.hidden=false;box.classList.remove('compact');later.hidden=false;}};
- later.onclick=()=>{box.classList.add('compact');later.hidden=true;};
+ let registration,reloading=false,requested=false,changed=false,timeout,transient=false;
+ const offer=()=>{if(registration?.waiting||changed){transient=false;later.textContent='Später';box.querySelector('strong').textContent='Ein Update ist bereit';now.hidden=false;status.textContent='Eine neue Version ist bereit. Deine gespeicherten Daten bleiben erhalten.';box.hidden=false;box.classList.remove('compact');later.hidden=false;}};
+ later.onclick=()=>{if(transient){box.hidden=true;return;}box.classList.add('compact');later.hidden=true;};
+ window.addEventListener('hashchange',()=>{if(transient)box.hidden=true;});
  now.onclick=()=>{
   try{checkpoint();}catch{status.textContent='Die Sicherung vor dem Update konnte nicht gespeichert werden. Bitte sichere deine Daten unter Einstellungen → Datei sichern. Das Update wurde nicht gestartet.';box.classList.remove('compact');return;}
   if(changed){location.reload();return;}
@@ -38,7 +39,7 @@ export async function setupUpdates(){
   let checking=false;
   manualCheck=async()=>{
    if(checking||requested)return;
-   box.hidden=false;box.classList.remove('compact');later.hidden=false;now.hidden=true;
+   transient=true;later.textContent='Schließen';box.hidden=false;box.classList.remove('compact');later.hidden=false;now.hidden=true;
    box.querySelector('strong').textContent='App-Update';
    if(!navigator.onLine){status.textContent='Du bist offline. Bitte verbinde dich mit dem Internet und versuche es erneut.';return;}
    checking=true;status.textContent='Suche nach Updates …';
