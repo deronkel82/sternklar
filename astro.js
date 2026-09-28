@@ -35,6 +35,14 @@ export function fov(scope){return {w:2*Math.atan(scope.px*scope.pixel/1000/(2*sc
 // cannot establish that a mosaic is useful; this is geometry, not device control.
 export function mosaicUseful(t,scope){const fit=fitTarget(t,scope);return Number.isFinite(fit.ratio)&&fit.ratio<1.25;}
 export function fitTarget(t,scope){const f=fov(scope);if(!t.major)return {ratio:null,label:'Größe unbekannt',f};const a=t.major,b=t.minor||a;const ratio=Math.max(Math.min(f.w/a,f.h/b),Math.min(f.w/b,f.h/a));return {ratio,label:ratio<1?'Mosaik nötig':ratio<1.25?'Knapp im Bild':ratio>12?'Sehr kleines Motiv':'Passt ins Bild',f};}
+// Planning heuristic: favor a useful image scale and room around the target.
+export function imageScalePenalty(ratio){
+ if(!Number.isFinite(ratio)||ratio<=0)return 14;
+ if(ratio<1)return Math.min(40,18+12*Math.log2(1/ratio));
+ if(ratio<1.25)return 18*(1.25-ratio)/.25;
+ if(ratio<=4)return 0;
+ return Math.min(40,12*Math.log2(ratio/4));
+}
 export function analyze(t,ctx,scope,settings={}){
  const eq=starEq(t.ra,t.dec,ctx.mid,ctx.rotation),min=settings.minAltitude??20,fit=fitTarget(t,scope),points=[],windows=[];let open=null,minMoon=180;
  for(const s of ctx.samples){const h=A.Horizon(s.d,ctx.obs,eq.ra,eq.dec,'normal'),floor=floorAt(h.azimuth,ctx.loc,min);const fraction=(s.d-ctx.start)/(ctx.end-ctx.start);const visible=s.sun<ctx.threshold&&h.altitude>=floor&&fraction>=(settings.windowStart??0)&&fraction<(settings.windowEnd??1);const p={d:s.d,alt:h.altitude,az:h.azimuth,floor,visible};points.push(p);if(visible){if(open===null)open=s.d;if(s.moon.altitude>0)minMoon=Math.min(minMoon,separation(eq,s.moon));}else if(open!==null){windows.push({start:open,end:s.d});open=null;}}
@@ -42,7 +50,7 @@ export function analyze(t,ctx,scope,settings={}){
  const valid=points.filter(p=>p.visible);const peak=(valid.length?valid:points).reduce((a,b)=>a.alt>b.alt?a:b);const hours=valid.length*ctx.step/36e5;
  const moonPenalty=settings.moonAdapt===false?0:ctx.illum*(t.emission&&settings.filter==='dual'?7:22)*(1-ctx.moonFree/(ctx.darkHours||1))+Math.max(0,40-minMoon)*.65;
  const skyPenalty=(settings.sky??2)*(t.emission&&settings.filter==='dual'?1.5:t.group==='Galaxie'||t.type==='RfN'||t.type==='DrkN'?5:2);
- const fitPenalty=fit.ratio===null?8:fit.ratio<1?12:fit.ratio>12?15:fit.ratio>6?5:0;
+ const fitPenalty=imageScalePenalty(fit.ratio);
  const score=hours===0?0:Math.round(clamp(30+Math.min(hours,5)*7+Math.max(0,peak.alt)*.35+(t.easy?7:0)-moonPenalty-skyPenalty-fitPenalty,1,99));
  return {...t,eq,points,windows,peak,hours,score,fit,minMoon,moonPenalty,dir:DIRS[Math.round(peak.az/45)%8]};
 }

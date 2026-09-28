@@ -18,3 +18,14 @@ test('Backup roundtrip retains Unicode, scope and notes; malformed imports rejec
 test('Weather score penalizes rain and dew; custom horizon interpolates across north',()=>{assert.ok(weatherQuality({cloud_cover:0,temperature_2m:15,dew_point_2m:5,wind_gusts_10m:5,visibility:20000,precipitation:0,precipitation_probability:0})>90);assert.ok(weatherQuality({cloud_cover:80,temperature_2m:10,dew_point_2m:10,wind_gusts_10m:35,visibility:4000,precipitation:1,precipitation_probability:90})<=15);assert.equal(floorAt(22.5,{horizon:[20,60,0,0,0,0,0,0]},0),40);});
 test('Origin Mark II uses 678C sensor and matches manufacturer field of view',()=>{const s=SCOPES.find(x=>x.id==='originmk2');assert.equal(s.aperture,152);const field=fov(s);assert.ok(Math.abs(field.w/60-1.32)<.01);assert.ok(Math.abs(field.h/60-.75)<.01);const state=defaults();state.scopes.push(s.id);state.scope=s.id;assert.equal(validate(state).scope,s.id);});
 test('Mosaic filter follows active sensor size and includes tight framing, excluding unknown sizes',async()=>{const {mosaicUseful}=await import('../astro.js');const dwarf=SCOPES.find(s=>s.id==='dwarf3'),origin=SCOPES.find(s=>s.id==='originmk2');assert.equal(mosaicUseful({major:90,minor:60},dwarf),false);assert.equal(mosaicUseful({major:90,minor:60},origin),true);assert.equal(mosaicUseful({major:null},origin),false);assert.equal(mosaicUseful({major:0},origin),false);assert.equal(mosaicUseful(cat.find(t=>t.id==='M31'),dwarf),true);const f=fov(origin);assert.equal(mosaicUseful({major:f.w/1.2,minor:f.h/1.2},origin),true);assert.equal(mosaicUseful({major:f.w/1.3,minor:f.h/1.3},origin),false);});
+test('Changing telescope reverses preference for large vs compact objects at equal visibility',()=>{
+ const ctx=nightContext('2026-09-28',DEFAULT_LOCATION),base=cat.find(t=>t.id==='M39');
+ const large={...base,id:'large',major:90,minor:60},compact={...base,id:'compact',major:25,minor:15};
+ const score=(t,id)=>analyze(t,ctx,SCOPES.find(s=>s.id===id),defaults()).score;
+ assert.ok(score(large,'dwarf3')>score(compact,'dwarf3'));
+ assert.ok(score(compact,'originmk2')>score(large,'originmk2'));
+});
+test('Image-scale weighting is continuous at framing boundaries and penalizes unknown and extreme scales',async()=>{
+ const {imageScalePenalty:p}=await import('../astro.js');assert.equal(p(2),0);assert.ok(p(.5)>p(.9));assert.ok(p(20)>p(8));assert.ok(p(null)>0);
+ for(const edge of [1,1.25,4])assert.ok(Math.abs(p(edge-.00001)-p(edge+.00001))<.01);
+});

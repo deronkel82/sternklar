@@ -1,6 +1,7 @@
-export const APP_VERSION='1.3.1';
+export const APP_VERSION='1.4.0';
 export const SEEN_KEY='sternklar-changelog-seen';
 export const RELEASES=[
+ {version:'1.4.0',title:'Ziele passend zum aktiven Teleskop',changes:['Die Empfehlungen gewichten die Objektgröße im Bildfeld des aktiven Teleskops stärker. Sehr kleine Motive, knapp angeschnittene Ziele und nötige Mosaike werden niedriger bewertet.','Die Empfehlung zeigt das verwendete Teleskop und sein Bildfeld. Beim Teleskopwechsel werden die Vorschläge sofort neu berechnet.','Die verbesserte Bewertung gilt auch im Katalog und für die Planvorschläge pro Teleskop.']},
  {version:'1.3.1',title:'Wetter sichtbar aktualisieren',changes:['Direkter Aktualisieren-Button in der Nachtvorhersage und im Stundenwetter.','Sichtbarer Abrufstatus, Zeitstempel mit Sekunden und Rückmeldung bei unveränderten Vorhersagen.','Manuelle Aktualisierung umgeht den Wettercache. Fehler werden klar angezeigt; gespeicherte Prognosen bleiben als veraltet erkennbar.']},
  {version:'1.3.0',title:'Neuigkeiten immer im Blick',changes:['Die Versionshistorie ist jetzt in den Einstellungen unter „Was ist neu? / Changelog“ erreichbar.','Nach einem Update erscheinen die Neuigkeiten einmalig. Nach dem Schließen bleiben sie in der Versionshistorie nachlesbar.']},
  {version:'1.2.4',title:'Alle Teleskope im Bildfeldvergleich',changes:['„Passt es in dein Bild?“ zeigt alle ausgewählten Teleskope und eigenen Setups.','Eine separate Legende mit Bildfeldmaßen, Farben und Linienmustern erleichtert den Vergleich.']},
