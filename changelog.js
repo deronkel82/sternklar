@@ -1,6 +1,7 @@
-export const APP_VERSION='1.4.2';
+export const APP_VERSION='1.4.3';
 export const SEEN_KEY='sternklar-changelog-seen';
 export const RELEASES=[
+ {version:'1.4.3',title:'Die nächsten sieben Nächte beginnen heute',changes:['Die Wochenübersicht startet mit dem heutigen Kalendertag am eingestellten Standort, auch am Vormittag.','Ab 08:00 Uhr zeigt „Heute Nacht“ die kommende Nacht. Eine geöffnete App stellt die Vorschau beim Tageswechsel automatisch um, ohne manuell gewählte Nächte zu überschreiben.']},
  {version:'1.4.2',title:'Wetterfenster direkt in der Höhenkurve',changes:['Empfohlene Ziele zeigen astronomische Sichtbarkeit und wettergünstige Abschnitte in zwei Farben auf derselben Uhrzeitachse.','Die Zielansicht zeigt dieselbe Darstellung mit Uhrzeiten und einer Legende. Fehlende oder veraltete Prognosen werden nicht als günstiges Wetter gezeichnet.']},
  {version:'1.4.1',title:'Wetterfenster pro Ziel',changes:['Empfohlene Ziele zeigen neben der astronomischen Sichtbarkeit eine geschätzte Fotozeit aus der stündlichen Wetterprognose.','Wetterfenster berücksichtigen nur die Zeiten, in denen das Ziel über deinem Horizont steht. Bei fehlender oder veralteter Prognose wird kein Wetterfenster behauptet.','Nach einer Wetteraktualisierung passen sich die Angaben direkt an.']},
  {version:'1.4.0',title:'Ziele passend zum aktiven Teleskop',changes:['Die Empfehlungen gewichten die Objektgröße im Bildfeld des aktiven Teleskops stärker. Sehr kleine Motive, knapp angeschnittene Ziele und nötige Mosaike werden niedriger bewertet.','Die Empfehlung zeigt das verwendete Teleskop und sein Bildfeld. Beim Teleskopwechsel werden die Vorschläge sofort neu berechnet.','Die verbesserte Bewertung gilt auch im Katalog und für die Planvorschläge pro Teleskop.']},

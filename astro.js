@@ -11,7 +11,7 @@ export function zonedDate(date,hour,tz){
  for(let i=0;i<3;i++){const p=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date(t)).map(p=>[p.type,p.value]));const actual=Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second);t+=desired-actual;}
  return new Date(t);
 }
-export function currentNight(tz){const d=new Date();let date=dateInZone(d,tz);const hour=+new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',hourCycle:'h23'}).format(d);return hour<12?shiftDate(date,-1):date;}
+export function currentNight(tz,at=new Date()){const date=dateInZone(at,tz);const hour=+new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',hourCycle:'h23'}).format(at);return hour<8?shiftDate(date,-1):date;}
 export function time(d,tz){return d?new Intl.DateTimeFormat('de-DE',{timeZone:tz,hour:'2-digit',minute:'2-digit'}).format(new Date(d)):'—';}
 export function longDate(d,tz){return new Intl.DateTimeFormat('de-DE',{timeZone:tz,day:'numeric',month:'short',year:'numeric'}).format(new Date(d));}
 export function observer(loc){return new A.Observer(loc.lat,loc.lon,loc.elevation||0);}
