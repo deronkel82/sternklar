@@ -1,6 +1,7 @@
-export const APP_VERSION='1.7.0';
+export const APP_VERSION='1.7.1';
 export const SEEN_KEY='sternklar-changelog-seen';
 export const RELEASES=[
+ {version:'1.7.1',title:'Ruhiger Wetterabruf',changes:['Beim Aktualisieren bleibt die Wetterkarte unverändert hoch. Der Button zeigt den Ladezustand; das Ergebnis erscheint als kurze Meldung.']},
  {version:'1.7.0',title:'Ruhigere, einheitliche Buttons',changes:['Hauptaktionen, Nebenaktionen und Textbuttons folgen in der gesamten App derselben Form- und Farbwelt; die Akzentfläche ist weniger grell.','Auch auf der Update-Hilfeseite passt der Button zum neuen Design. In der Stundenansicht erscheint die Abrufzeit nur einmal.']},
  {version:'1.6.1',title:'Klareres Nachtwetter',changes:['Der Wetterabruf zeigt seinen Zeitstempel nur einmal; der kurze Abschluss erscheint als Rückmeldung nach dem Aktualisieren.','Die stündliche Wettervorhersage hat im Nachtfenster einen gut erkennbaren eigenen Button.']},
  {version:'1.6.0',title:'Für das iPhone verfeinert',changes:['Kompakteres Nachtfenster, bessere Fingerziele und eine handliche Navigation für schmale Bildschirme.','In Detailansichten führt ein Wisch vom linken Rand nach rechts zurück. Ein sichtbarer Zurück-Knopf bietet denselben Weg; Aufsuchkarte und Teilen kehren zum geöffneten Ziel zurück.']},
