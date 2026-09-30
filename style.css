@@ -60,3 +60,19 @@
  .hourly-item{padding:12px}.field-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:360px){.brand{font-size:19px}.location-button{max-width:27vw}.dialog-back span{display:none}.date-tools{grid-template-columns:42px minmax(0,1fr) 42px auto;gap:4px}.date-tools .icon-button{width:42px}.date-tools .ghost{min-width:50px}.night-panel .panel-heading{align-items:flex-start}.night-panel .panel-heading .pill{white-space:normal;text-align:center}.stat span{font-size:11px}}
+
+/* One calm action palette across primary, secondary, and text buttons. */
+:root{--button-fill:#79b8aa;--button-hover:#8bc9bb;--button-ink:#071e1b;--button-outline:#416a65;--button-tint:#193c39}
+.redlight{--button-fill:#c76c62;--button-hover:#d98075;--button-ink:#190706;--button-outline:#84413b;--button-tint:#3b1715}
+button{transition:background-color .16s,border-color .16s,color .16s,box-shadow .16s}
+button:hover{border-color:var(--button-outline)}
+button.primary,.primary,.weather-hourly{background:var(--button-fill);border-color:var(--button-fill);color:var(--button-ink);font-weight:700}
+button.primary:hover,.weather-hourly:hover{background:var(--button-hover);border-color:var(--button-hover)}
+button.active,.chip.active{background:var(--button-tint);border-color:var(--button-outline);color:var(--button-hover)}
+button.ghost,.section-head button,.card-footer button,.bortle-row button,.dialog-back{color:var(--button-fill)}
+button.ghost:hover,.section-head button:hover,.card-footer button:hover,.bortle-row button:hover,.dialog-back:hover{color:var(--button-hover);background:var(--button-tint)}
+.weather-links button{color:var(--button-fill)}
+.update-banner{border-color:var(--button-outline)}
+.chip,.card-footer button,.bortle-row button,.weather-links button{min-height:44px}
+@media(max-width:600px){.plan-item{grid-template-columns:56px minmax(0,1fr) 44px}.plan-item>.icon-button{width:44px}}
+@media(max-width:360px){.date-tools{grid-template-columns:44px minmax(0,1fr) 44px auto}.date-tools .icon-button{width:44px}}
