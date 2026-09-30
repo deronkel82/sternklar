@@ -12,6 +12,9 @@ Astronomy Engine by Don Cross, MIT: https://github.com/cosinekitty/astronomy . V
 ## Weather and geocoding
 Open-Meteo, https://open-meteo.com/ and https://open-meteo.com/en/docs . Weather data CC BY 4.0. Free endpoint is intended for noncommercial use; production commercial deployments require reviewing their current terms. Geocoding is backed by GeoNames. No secret API key is embedded.
 
+## Bortle classification
+The Bortle class is a subjective, site-specific assessment entered by the user, not calculated from coordinates or satellite radiance. The app links to https://lightpollutionmap.app/ for a location-specific orientation without embedding or copying its map data. Map-based zenith brightness and a field Bortle assessment are distinct; see David Lorenz's explanation at https://djlorenz.github.io/astronomy/lp/bortle.html . The value is stored with the observing location and remains optional.
+
 ## Optional map
 Leaflet 1.9.4, BSD-2-Clause, vendor/Leaflet-LICENSE. Map data © OpenStreetMap contributors, ODbL: https://www.openstreetmap.org/copyright . Tiles fetched on demand, not preloaded or downloaded for bulk offline use.
 
