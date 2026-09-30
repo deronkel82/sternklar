@@ -27,3 +27,34 @@
 @media(max-width:900px){.night-content{grid-template-columns:1fr;gap:20px}.night-weather{border-left:0;border-top:1px solid var(--line);padding:20px 0 0}.night-weather .stats{max-width:600px}}
 @media(max-width:600px){.night-content{margin:12px 0 18px}.night-weather .panel-heading{gap:8px}.night-weather .panel-heading h3{font-size:17px}.night-weather .stat strong{font-size:21px}.night-weather .stat+.stat{padding-left:9px}}
 .night-weather .panel-heading{margin-bottom:8px}.night-weather .weather-stats{margin:10px 0 8px}.night-weather .weather-advice{font-size:13px;line-height:1.4;margin:4px 0 8px}.weather-meta{display:flex;align-items:center;justify-content:space-between;gap:4px 12px;flex-wrap:wrap}.weather-meta small{font-size:12px}.weather-links{display:flex;align-items:center;gap:2px}.weather-links button{min-height:42px;padding:5px 8px;font-size:13px;white-space:nowrap}.night-weather .statusline{min-height:0;margin:4px 0 0}.night-weather .statusline:empty{display:none}.night-weather .notice{margin:6px 0 0;padding:8px 10px;font-size:12px}
+.dialog-back{display:none}
+@media(max-width:600px){
+ body{padding-bottom:calc(82px + env(safe-area-inset-bottom))}
+ .topbar{height:calc(64px + env(safe-area-inset-top));padding-left:16px;padding-right:10px}
+ .brand{font-size:21px;gap:6px}.brand-mark{font-size:25px}
+ .location-button{max-width:min(31vw,135px);min-height:44px;text-align:right}
+ main{padding:18px 16px 24px}
+ .page-head{margin-bottom:18px}.page-head h1{font-size:32px}
+ .date-tools{display:grid;grid-template-columns:44px minmax(0,1fr) 44px auto;gap:6px;margin-top:14px;width:100%}
+ .date-tools .icon-button{width:44px;height:44px}.date-tools input{width:100%;min-width:0;padding:7px 5px;font-size:15px}.date-tools .ghost{padding:5px 8px;min-width:54px}
+ .panel{padding:17px}.night-content{gap:14px;margin:10px 0 14px}
+ .night-astro .stats{margin:12px 0}.night-weather{padding-top:14px}.night-weather .stats{margin:9px 0 7px}
+ .night-astro .stat strong,.night-weather .stat strong{font-size:20px}.stat+.stat,.night-weather .stat+.stat{padding-left:8px}
+ .timeline{margin:12px 0 6px}.night-astro .space-top{margin-top:12px}
+ .bortle-row{padding-top:12px;margin-top:8px}.bortle-row button{min-height:44px}
+ .week-section .section-head{flex-wrap:wrap;gap:4px 10px}.week-section .section-head>button{min-height:44px;padding:8px 10px}
+ .week-section .forecast{touch-action:pan-x;overscroll-behavior-inline:contain;scroll-padding-inline:2px}.week-section .forecast button{flex-basis:98px;min-height:88px}
+ .bottom-nav{min-height:68px;padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+ .bottom-nav a{min-height:54px;display:flex;flex-direction:column;justify-content:center;line-height:1.2;font-size:11px}
+ .bottom-nav a span{line-height:25px}
+ .target-main{padding:17px}.card-footer button,.tool-row button{min-height:44px}
+ dialog{max-height:calc(100dvh - env(safe-area-inset-top) - 8px);border-radius:20px 20px 0 0;overscroll-behavior:contain}
+ .dialog-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px;padding:18px 16px 10px;min-height:64px}
+ .dialog-head:before{content:'';position:absolute;top:7px;left:calc(50% - 18px);height:4px;width:36px;border-radius:4px;background:var(--muted);opacity:.55}
+ .dialog-head h2{font-size:18px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+ .dialog-back{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:6px 8px 6px 0;border:0;background:none;color:var(--accent);font-size:17px;white-space:nowrap}
+ .dialog-back span{font-size:15px}#close-dialog{display:none}
+ #dialog-body{padding:16px 16px calc(24px + env(safe-area-inset-bottom))}
+ .hourly-item{padding:12px}.field-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:360px){.brand{font-size:19px}.location-button{max-width:27vw}.dialog-back span{display:none}.date-tools{grid-template-columns:42px minmax(0,1fr) 42px auto;gap:4px}.date-tools .icon-button{width:42px}.date-tools .ghost{min-width:50px}.night-panel .panel-heading{align-items:flex-start}.night-panel .panel-heading .pill{white-space:normal;text-align:center}.stat span{font-size:11px}}

@@ -1,6 +1,7 @@
-export const APP_VERSION='1.5.2';
+export const APP_VERSION='1.6.0';
 export const SEEN_KEY='sternklar-changelog-seen';
 export const RELEASES=[
+ {version:'1.6.0',title:'Für das iPhone verfeinert',changes:['Kompakteres Nachtfenster, bessere Fingerziele und eine handliche Navigation für schmale Bildschirme.','In Detailansichten führt ein Wisch vom linken Rand nach rechts zurück. Ein sichtbarer Zurück-Knopf bietet denselben Weg; Aufsuchkarte und Teilen kehren zum geöffneten Ziel zurück.']},
  {version:'1.5.2',title:'Wetter kompakter im Nachtfenster',changes:['Die Nachtprognose zeigt Kennzahlen, Hinweis und Abrufzeit mit deutlich weniger Abstand.','Aktualisieren und Stundenansicht sitzen nebeneinander; der Abrufstatus erscheint nur während oder nach einer Aktualisierung.']},
  {version:'1.5.1',title:'Ein Nachtfenster für Himmel und Wetter',changes:['Nachtverlauf und Wetterprognose stehen jetzt gemeinsam in einer Karte. Auf schmalen Bildschirmen folgen sie übersichtlich aufeinander.','Die Bortle-Eingabe erklärt Schritt für Schritt, wo du einen Kartenwert für deinen Standort findest und wie du ihn als Schätzung einordnest.']},
  {version:'1.5.0',title:'Nächte, Stunden und dein Himmel',changes:['Die nächsten sieben Nächte stehen direkt unter dem aktuellen Nachtwetter. Ein Tipp auf eine Nacht öffnet deren übersichtliche Stundenprognose.','Für jeden Beobachtungsplatz lässt sich eine Bortle-Klasse von 1 bis 9 eintragen und dauerhaft speichern. Ein Kartenlink hilft bei der Einordnung; der Wert wird nicht als automatische Messung ausgegeben.','Auf dem iPhone lassen sich die sieben Nächte bequem horizontal durchwischen.']},
