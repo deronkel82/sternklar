@@ -1,6 +1,7 @@
-export const APP_VERSION='1.7.1';
+export const APP_VERSION='1.8.0';
 export const SEEN_KEY='sternklar-changelog-seen';
 export const RELEASES=[
+ {version:'1.8.0',title:'Eindeutige Aktionen und saubere Datumszeile',changes:['Auf schmalen iPhones haben Datum, Pfeile und Heute feste, getrennte Plätze; das Datumsfeld überlappt den nächsten Pfeil nicht mehr.','Nebenaktionen wie Details, Aktualisieren, Bortle und Standort besitzen sichtbare Buttonflächen. Zielkarten zeigen ausdrücklich „Details ansehen“, und Planziele sind als Aktionen erkennbar.']},
  {version:'1.7.1',title:'Ruhiger Wetterabruf',changes:['Beim Aktualisieren bleibt die Wetterkarte unverändert hoch. Der Button zeigt den Ladezustand; das Ergebnis erscheint als kurze Meldung.']},
  {version:'1.7.0',title:'Ruhigere, einheitliche Buttons',changes:['Hauptaktionen, Nebenaktionen und Textbuttons folgen in der gesamten App derselben Form- und Farbwelt; die Akzentfläche ist weniger grell.','Auch auf der Update-Hilfeseite passt der Button zum neuen Design. In der Stundenansicht erscheint die Abrufzeit nur einmal.']},
  {version:'1.6.1',title:'Klareres Nachtwetter',changes:['Der Wetterabruf zeigt seinen Zeitstempel nur einmal; der kurze Abschluss erscheint als Rückmeldung nach dem Aktualisieren.','Die stündliche Wettervorhersage hat im Nachtfenster einen gut erkennbaren eigenen Button.']},

@@ -76,3 +76,23 @@ button.ghost:hover,.section-head button:hover,.card-footer button:hover,.bortle-
 .chip,.card-footer button,.bortle-row button,.weather-links button{min-height:44px}
 @media(max-width:600px){.plan-item{grid-template-columns:56px minmax(0,1fr) 44px}.plan-item>.icon-button{width:44px}}
 @media(max-width:360px){.date-tools{grid-template-columns:44px minmax(0,1fr) 44px auto}.date-tools .icon-button{width:44px}}
+
+/* Clear button boundaries on every surface, including previously text-only actions. */
+:is(button.ghost,.section-head button,.card-footer button,.bortle-row button,.dialog-back,.location-button,.icon-button){background:var(--raised);border:1px solid var(--button-outline);border-radius:12px;color:var(--button-hover)}
+:is(button.ghost,.section-head button,.card-footer button,.bortle-row button,.dialog-back,.location-button,.icon-button):hover{background:var(--button-tint);border-color:var(--button-fill);color:var(--button-hover)}
+.dialog-back{padding:6px 12px}
+.location-button{padding:6px 10px}
+.card-footer button{padding:7px 12px}
+.target-open{display:inline-flex;align-items:center;justify-content:center;min-height:38px;margin-top:12px;padding:6px 12px;border:1px solid var(--button-outline);border-radius:12px;background:var(--raised);color:var(--button-hover);font-size:13px;font-weight:650}
+.target-main:hover .target-open{background:var(--button-tint);border-color:var(--button-fill)}
+.plan-target-button{display:inline-flex;align-items:center;max-width:100%;min-height:44px;padding:6px 12px;text-align:left;border-color:var(--button-outline);color:var(--button-hover)}
+.plan-target-button h3{margin:0;overflow-wrap:anywhere}
+@media(max-width:600px){
+ .date-tools{grid-template-columns:44px minmax(0,1fr) 44px 68px;gap:8px;min-width:0}
+ .date-tools>*{box-sizing:border-box;min-width:0;margin:0}
+ .date-tools input[type=date]{display:block;width:100%;min-width:0;max-width:100%;overflow:hidden;padding:6px 4px;font-size:16px}
+ .date-tools .ghost{width:68px;min-width:0;padding:6px 4px}
+ .location-button{max-width:31vw;padding:6px 8px}
+ .night-astro button.ghost{min-height:44px;padding:7px 12px}
+}
+@media(max-width:360px){.date-tools{grid-template-columns:44px minmax(0,1fr) 44px 62px;gap:6px}.date-tools .ghost{width:62px}}
