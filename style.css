@@ -78,6 +78,8 @@ button.ghost:hover,.section-head button:hover,.card-footer button:hover,.bortle-
 @media(max-width:360px){.date-tools{grid-template-columns:44px minmax(0,1fr) 44px auto}.date-tools .icon-button{width:44px}}
 
 /* Clear button boundaries on every surface, including previously text-only actions. */
+.date-tools{max-width:380px;flex-shrink:0}
+.date-tools input[type=date]{width:170px;flex:0 0 170px}
 :is(button.ghost,.section-head button,.card-footer button,.bortle-row button,.dialog-back,.location-button,.icon-button){background:var(--raised);border:1px solid var(--button-outline);border-radius:12px;color:var(--button-hover)}
 :is(button.ghost,.section-head button,.card-footer button,.bortle-row button,.dialog-back,.location-button,.icon-button):hover{background:var(--button-tint);border-color:var(--button-fill);color:var(--button-hover)}
 .dialog-back{padding:6px 12px}
@@ -90,7 +92,7 @@ button.ghost:hover,.section-head button:hover,.card-footer button:hover,.bortle-
 @media(max-width:600px){
  .date-tools{grid-template-columns:44px minmax(0,1fr) 44px 68px;gap:8px;min-width:0}
  .date-tools>*{box-sizing:border-box;min-width:0;margin:0}
- .date-tools input[type=date]{display:block;width:100%;min-width:0;max-width:100%;overflow:hidden;padding:6px 4px;font-size:16px}
+ .date-tools input[type=date]{display:block;width:100%;min-width:0;max-width:100%;flex:auto;overflow:hidden;padding:6px 4px;font-size:16px}
  .date-tools .ghost{width:68px;min-width:0;padding:6px 4px}
  .location-button{max-width:31vw;padding:6px 8px}
  .night-astro button.ghost{min-height:44px;padding:7px 12px}

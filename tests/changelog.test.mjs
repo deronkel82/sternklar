@@ -9,7 +9,7 @@ test('Existing installations see news once, without changing their data',()=>{
 });
 test('Fresh installs establish a baseline; skipped versions appear newest first',()=>{
  const fresh=storage();assert.deepEqual(unseenReleases(fresh),[]);assert.equal(fresh.getItem(SEEN_KEY),APP_VERSION);
- const previous=storage([[SEEN_KEY,'1.2.2']]);assert.deepEqual(unseenReleases(previous).map(r=>r.version),['1.8.0','1.7.1','1.7.0','1.6.1','1.6.0','1.5.2','1.5.1','1.5.0','1.4.3','1.4.2','1.4.1','1.4.0','1.3.1','1.3.0','1.2.4','1.2.3']);assert.ok(newer('1.10.0','1.9.0'));
+ const previous=storage([[SEEN_KEY,'1.2.2']]);assert.deepEqual(unseenReleases(previous).map(r=>r.version),['1.8.1','1.8.0','1.7.1','1.7.0','1.6.1','1.6.0','1.5.2','1.5.1','1.5.0','1.4.3','1.4.2','1.4.1','1.4.0','1.3.1','1.3.0','1.2.4','1.2.3']);assert.ok(newer('1.10.0','1.9.0'));
 });
 test('Older tabs do not overwrite newer acknowledgements and blocked storage cannot break startup',()=>{
  const future=storage([[SEEN_KEY,'2.0.0']]);acknowledgeRelease(future);assert.equal(future.getItem(SEEN_KEY),'2.0.0');assert.deepEqual(unseenReleases(future),[]);
